@@ -1,0 +1,3 @@
+SELECT category, ROUND(AVG(rating), 2) AS avg_rating
+FROM reviews
+GROUP BY category;
