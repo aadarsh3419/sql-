@@ -1,0 +1,8 @@
+WITH total_sales AS (
+  SELECT branch, SUM(sales_amount) AS total
+  FROM sales
+  GROUP BY branch
+)
+SELECT branch
+FROM total_sales
+WHERE total = (SELECT MAX(total) FROM total_sales);
