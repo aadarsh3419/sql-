@@ -1,0 +1,9 @@
+SELECT *
+FROM (
+  SELECT product_id, MONTH(order_date) AS month,
+         SUM(quantity) AS total_quantity,
+         RANK() OVER (PARTITION BY MONTH(order_date) ORDER BY SUM(quantity) DESC) AS rk
+  FROM orders
+  GROUP BY product_id, MONTH(order_date)
+) ranked
+WHERE rk <= 3;
