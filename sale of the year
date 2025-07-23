@@ -1,0 +1,5 @@
+SELECT MONTH(order_date) as month, SUM(total_amount) as monthly_sales
+FROM orders
+WHERE YEAR(order_date) = 2025
+GROUP BY MONTH(order_date)
+ORDER BY month;
