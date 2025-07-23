@@ -1,0 +1,5 @@
+SELECT product_id, COUNT(*) as times_sold
+FROM order_items
+GROUP BY product_id
+ORDER BY times_sold DESC
+LIMIT 1;
