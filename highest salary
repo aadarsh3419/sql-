@@ -1,0 +1,11 @@
+WITH high_salary AS (
+  SELECT 
+      name,
+      department,
+      salary,
+      RANK() OVER(PARTITION BY department ORDER BY salary DESC) AS high
+  FROM employess
+)
+SELECT * 
+FROM high_salary
+WHERE high <= 2;
