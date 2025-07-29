@@ -1,0 +1,11 @@
+with highest_salary as (
+   select 
+     name,
+     department,
+     salary,
+     rank()over(partition by department order by salary desc) as big_salary
+  from employees
+)
+select * 
+from highest_salary
+where big_salary <= 3
