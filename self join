@@ -1,0 +1,6 @@
+select e1.name  ,e2.manager_id
+from
+employees e1
+join employees e2
+on e1.id = e2.manager_id 
+ 
