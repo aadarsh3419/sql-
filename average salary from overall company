@@ -1,0 +1,13 @@
+WITH overall_avg AS (
+  SELECT AVG(salary) AS company_avg
+  FROM employees
+),
+dept_avg AS (
+  SELECT department, AVG(salary) AS dept_avg
+  FROM employees
+  GROUP BY department
+)
+SELECT d.department, d.dept_avg, o.company_avg
+FROM dept_avg d
+CROSS JOIN overall_avg o
+WHERE d.dept_avg > o.company_avg;
