@@ -1,0 +1,16 @@
+WITH customer_totals AS (
+    SELECT 
+        c.city,
+        c.name AS customer_name,
+        SUM(o.total_amount) AS total_spent
+    FROM customers c
+    JOIN orders o 
+        ON c.customer_id = o.customer_id
+    GROUP BY c.city, c.name
+)
+SELECT 
+    city,
+    customer_name,
+    total_spent,
+    RANK() OVER (PARTITION BY city ORDER BY total_spent DESC) AS rank_in_city
+FROM customer_totals;
