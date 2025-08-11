@@ -1,0 +1,24 @@
+WITH customer_totals AS (
+    SELECT 
+        c.name AS customer_name,
+        c.city,
+        SUM(o.total_amount) AS total_spent,
+        CASE 
+            WHEN SUM(o.total_amount) >= 700 THEN 'High'
+            WHEN SUM(o.total_amount) BETWEEN 300 AND 699 THEN 'Medium'
+            ELSE 'Low'
+        END AS category
+    FROM customers c
+    JOIN orders o
+        ON c.customer_id = o.customer_id
+    WHERE c.city IN ('Mumbai', 'Delhi')
+    GROUP BY c.name, c.city
+)
+SELECT 
+    customer_name,
+    city,
+    total_spent,
+    category
+FROM customer_totals
+WHERE category IN ('High', 'Medium')
+ORDER BY total_spent DESC;
