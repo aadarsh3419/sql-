@@ -1,0 +1,15 @@
+-- Get the top 3 customers in each city based on total spending
+WITH customer_spending AS (
+    SELECT 
+        c.customer_id,
+        c.name,
+        c.city,
+        SUM(o.total_amount) AS total_spent,
+        RANK() OVER (PARTITION BY c.city ORDER BY SUM(o.total_amount) DESC) AS spending_rank
+    FROM customers c
+    JOIN orders o ON c.customer_id = o.customer_id
+    GROUP BY c.customer_id, c.name, c.city
+)
+SELECT *
+FROM customer_spending
+WHERE spending_rank <= 3;
